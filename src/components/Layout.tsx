@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Home, FileText, MessageSquare, LogOut, Landmark } from 'lucide-react';
+import { Home, FileText, MessageSquare, LogOut, Landmark, Star } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const NAV_ITEMS = [
@@ -19,11 +19,18 @@ export default function Layout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen flex-col bg-slate-50">
+      <div className="flex h-1.5 w-full shrink-0">
+        <div className="flex-1 bg-ghana-red" />
+        <div className="flex-1 bg-ghana-gold" />
+        <div className="flex-1 bg-ghana-green" />
+      </div>
+      <div className="flex flex-1">
       <aside className="hidden w-60 shrink-0 flex-col border-r border-slate-200 bg-white px-4 py-6 md:flex">
         <div className="mb-8 flex items-center gap-2 px-2">
           <Landmark className="h-6 w-6 text-ghana-green" />
           <span className="text-lg font-bold text-slate-900">Dodow Amanmuo</span>
+          <Star className="h-3.5 w-3.5 fill-ghana-black text-ghana-black" />
         </div>
 
         <nav className="flex flex-1 flex-col gap-1">
@@ -65,6 +72,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         </header>
 
         <main className="flex-1 px-6 py-6">{children}</main>
+      </div>
       </div>
     </div>
   );

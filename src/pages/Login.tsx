@@ -27,7 +27,13 @@ export default function Login() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-sm rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+      <div className="w-full max-w-sm overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div className="flex h-1.5 w-full">
+          <div className="flex-1 bg-ghana-red" />
+          <div className="flex-1 bg-ghana-gold" />
+          <div className="flex-1 bg-ghana-green" />
+        </div>
+        <div className="p-8">
         <div className="mb-6 flex flex-col items-center gap-2">
           <Landmark className="h-8 w-8 text-ghana-green" />
           <h1 className="text-xl font-bold text-slate-900">Dodow Amanmuo</h1>
@@ -73,6 +79,7 @@ export default function Login() {
             Create an account
           </Link>
         </p>
+        </div>
       </div>
     </div>
   );
