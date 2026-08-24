@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FileText, MessageSquare, Users, TrendingUp, ShieldCheck, Landmark, ArrowRight } from 'lucide-react';
+import { FileText, MessageSquare, Users, TrendingUp, ShieldCheck } from 'lucide-react';
 import Layout from '../components/Layout';
 import AnonymityBanner from '../components/AnonymityBanner';
 import QuoteCard from '../components/QuoteCard';
@@ -79,40 +79,6 @@ export default function Home() {
         </div>
 
         <QuoteCard />
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          <a
-            href="#ghana-news"
-            className="group flex flex-col justify-between overflow-hidden rounded-lg bg-gradient-to-br from-ghana-green to-emerald-800 p-5 text-white shadow-sm"
-          >
-            <Landmark className="h-7 w-7 text-white/80" />
-            <div className="mt-6">
-              <h3 className="text-base font-semibold">Government News</h3>
-              <p className="mt-1 text-sm text-white/80">
-                Catch up on the latest from ministries and district assemblies.
-              </p>
-              <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium">
-                See updates
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </span>
-            </div>
-          </a>
-
-          <Link
-            to="/policies"
-            className="group flex flex-col justify-between overflow-hidden rounded-lg bg-gradient-to-br from-ghana-red to-rose-900 p-5 text-white shadow-sm"
-          >
-            <FileText className="h-7 w-7 text-white/80" />
-            <div className="mt-6">
-              <h3 className="text-base font-semibold">Active Policies &amp; Bills</h3>
-              <p className="mt-1 text-sm text-white/80">Read and respond to legislation shaping the country.</p>
-              <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium">
-                Browse policies
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </span>
-            </div>
-          </Link>
-        </div>
 
         <NewsSection />
       </div>
