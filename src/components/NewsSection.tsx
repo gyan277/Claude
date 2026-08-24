@@ -14,7 +14,7 @@ const MOCK_NEWS: NewsItem[] = [
 
 export default function NewsSection() {
   return (
-    <section>
+    <section id="ghana-news" className="scroll-mt-4">
       <h2 className="mb-3 text-lg font-semibold text-slate-800">Ghana News</h2>
       <div className="flex gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-2 md:overflow-visible lg:grid-cols-4">
         {MOCK_NEWS.map((item) => (

@@ -10,6 +10,7 @@ const NAV_ITEMS = [
 ];
 
 const GOV_NAV_ITEM = { to: '/insights', label: 'Insights', icon: BarChart3 };
+const PROFILE_NAV_ITEM = { to: '/profile', label: 'Profile', icon: UserRound };
 
 export default function Layout({ children }: { children: ReactNode }) {
   const { user, logout } = useAuth();
@@ -20,7 +21,11 @@ export default function Layout({ children }: { children: ReactNode }) {
     navigate('/');
   };
 
-  const navItems = [...NAV_ITEMS, ...(user?.role === 'assembly' || user?.role === 'minister' ? [GOV_NAV_ITEM] : [])];
+  const navItems = [
+    ...NAV_ITEMS,
+    ...(user?.role === 'assembly' || user?.role === 'minister' ? [GOV_NAV_ITEM] : []),
+    PROFILE_NAV_ITEM,
+  ];
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50">

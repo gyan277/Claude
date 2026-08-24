@@ -9,6 +9,7 @@ export interface AuthUser {
   role: UserRole;
   district?: string;
   verified: boolean;
+  joinedAt: string;
 }
 
 interface AuthContextValue {
@@ -58,6 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email,
       role: 'citizen',
       verified: true,
+      joinedAt: new Date().toISOString(),
     };
     persist(next);
     return next;
@@ -71,6 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       role,
       district,
       verified: false,
+      joinedAt: new Date().toISOString(),
     };
     persist(next);
     return next;

@@ -7,6 +7,7 @@ import Policies from './pages/Policies';
 import PolicyDetail from './pages/PolicyDetail';
 import Forums from './pages/Forums';
 import Insights from './pages/Insights';
+import Profile from './pages/Profile';
 
 function GovRoute({ children }: { children: JSX.Element }) {
   const { user, loading } = useAuth();
@@ -35,6 +36,7 @@ export default function App() {
       <Route path="/policies" element={<Policies />} />
       <Route path="/policies/:id" element={<PolicyDetail />} />
       <Route path="/forums" element={<Forums />} />
+      <Route path="/profile" element={<Profile />} />
       <Route
         path="/insights"
         element={
