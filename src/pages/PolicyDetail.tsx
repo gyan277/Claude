@@ -93,7 +93,7 @@ export default function PolicyDetail() {
                     {index < currentStepIndex ? <CheckCircle2 className="h-4 w-4" /> : index + 1}
                   </div>
                   <span
-                    className={`mt-1 whitespace-nowrap text-[11px] ${
+                    className={`mt-1 w-14 text-center text-[10px] leading-tight sm:w-auto sm:whitespace-nowrap sm:text-[11px] ${
                       index <= currentStepIndex ? 'font-medium text-slate-700' : 'text-slate-400'
                     }`}
                   >
@@ -102,7 +102,7 @@ export default function PolicyDetail() {
                 </div>
                 {index < STATUS_STEPS.length - 1 && (
                   <div
-                    className={`mx-2 h-0.5 flex-1 ${index < currentStepIndex ? 'bg-ghana-green' : 'bg-slate-100'}`}
+                    className={`mx-1 h-0.5 flex-1 sm:mx-2 ${index < currentStepIndex ? 'bg-ghana-green' : 'bg-slate-100'}`}
                   />
                 )}
               </div>

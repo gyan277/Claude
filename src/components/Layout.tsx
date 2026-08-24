@@ -20,6 +20,8 @@ export default function Layout({ children }: { children: ReactNode }) {
     navigate('/login');
   };
 
+  const navItems = [...NAV_ITEMS, ...(user?.role === 'assembly' || user?.role === 'minister' ? [GOV_NAV_ITEM] : [])];
+
   return (
     <div className="flex min-h-screen flex-col bg-slate-50">
       <div className="flex h-1.5 w-full shrink-0">
@@ -27,7 +29,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="flex-1 bg-ghana-gold" />
         <div className="flex-1 bg-ghana-green" />
       </div>
-      <div className="flex flex-1">
+      <div className="flex min-w-0 flex-1">
       <aside className="hidden w-60 shrink-0 flex-col border-r border-slate-200 bg-white px-4 py-6 md:flex">
         <div className="mb-8 flex items-center gap-2 px-2">
           <Landmark className="h-6 w-6 text-ghana-green" />
@@ -36,8 +38,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
 
         <nav className="flex flex-1 flex-col gap-1">
-          {[...NAV_ITEMS, ...(user?.role === 'assembly' || user?.role === 'minister' ? [GOV_NAV_ITEM] : [])].map(
-            ({ to, label, icon: Icon }) => (
+          {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
@@ -63,20 +64,48 @@ export default function Layout({ children }: { children: ReactNode }) {
         </button>
       </aside>
 
-      <div className="flex flex-1 flex-col">
-        <header className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
-          <span className="text-sm font-medium text-slate-500 md:hidden">Dodow Amanmuo</span>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 md:px-6 md:py-4">
+          <div className="flex items-center gap-1.5 md:hidden">
+            <Landmark className="h-5 w-5 text-ghana-green" />
+            <span className="text-sm font-bold text-slate-900">Dodow Amanmuo</span>
+          </div>
           <div className="ml-auto flex items-center gap-3">
-            <span className="text-sm text-slate-600">{user?.name}</span>
+            <span className="hidden text-sm text-slate-600 sm:inline">{user?.name}</span>
             <span className="rounded-full bg-ghana-gold/20 px-2 py-0.5 text-xs font-semibold capitalize text-ghana-black">
               {user?.role}
             </span>
+            <button
+              onClick={handleLogout}
+              aria-label="Log out"
+              className="text-slate-400 hover:text-slate-600 md:hidden"
+            >
+              <LogOut className="h-5 w-5" />
+            </button>
           </div>
         </header>
 
-        <main className="flex-1 px-6 py-6">{children}</main>
+        <main className="flex-1 px-4 py-6 pb-24 md:px-6 md:pb-6">{children}</main>
       </div>
       </div>
+
+      <nav className="fixed inset-x-0 bottom-0 z-40 flex border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] md:hidden">
+        {navItems.map(({ to, label, icon: Icon }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={to === '/'}
+            className={({ isActive }) =>
+              `flex flex-1 flex-col items-center gap-0.5 py-2 text-[11px] font-medium ${
+                isActive ? 'text-ghana-green' : 'text-slate-400'
+              }`
+            }
+          >
+            <Icon className="h-5 w-5" />
+            {label}
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
 }
