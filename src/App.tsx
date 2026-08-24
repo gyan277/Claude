@@ -1,0 +1,64 @@
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import Home from './pages/Home';
+import Policies from './pages/Policies';
+import PolicyDetail from './pages/PolicyDetail';
+import Forums from './pages/Forums';
+
+function ProtectedRoute({ children }: { children: JSX.Element }) {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div className="flex min-h-screen items-center justify-center text-slate-400">Loading…</div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/policies"
+        element={
+          <ProtectedRoute>
+            <Policies />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/policies/:id"
+        element={
+          <ProtectedRoute>
+            <PolicyDetail />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/forums"
+        element={
+          <ProtectedRoute>
+            <Forums />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
