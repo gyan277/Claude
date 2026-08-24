@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { Home, FileText, MessageSquare, LogOut, Landmark, Star, BarChart3 } from 'lucide-react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Home, FileText, MessageSquare, LogOut, Landmark, Star, BarChart3, UserRound } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const NAV_ITEMS = [
@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
 
   const navItems = [...NAV_ITEMS, ...(user?.role === 'assembly' || user?.role === 'minister' ? [GOV_NAV_ITEM] : [])];
@@ -55,13 +55,28 @@ export default function Layout({ children }: { children: ReactNode }) {
           ))}
         </nav>
 
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100"
-        >
-          <LogOut className="h-4 w-4" />
-          Log out
-        </button>
+        {user ? (
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100"
+          >
+            <LogOut className="h-4 w-4" />
+            Log out
+          </button>
+        ) : (
+          <div className="space-y-1.5 rounded-md border border-ghana-gold/40 bg-ghana-gold/5 p-3">
+            <p className="text-xs text-slate-600">Register and verify your Ghana Card to vote and post.</p>
+            <Link
+              to="/signup"
+              className="block rounded-md bg-ghana-green px-3 py-1.5 text-center text-xs font-medium text-white"
+            >
+              Register
+            </Link>
+            <Link to="/login" className="block text-center text-xs font-medium text-ghana-green underline">
+              Sign in
+            </Link>
+          </div>
+        )}
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
@@ -71,17 +86,34 @@ export default function Layout({ children }: { children: ReactNode }) {
             <span className="text-sm font-bold text-slate-900">Dodow Amanmuo</span>
           </div>
           <div className="ml-auto flex items-center gap-3">
-            <span className="hidden text-sm text-slate-600 sm:inline">{user?.name}</span>
-            <span className="rounded-full bg-ghana-gold/20 px-2 py-0.5 text-xs font-semibold capitalize text-ghana-black">
-              {user?.role}
-            </span>
-            <button
-              onClick={handleLogout}
-              aria-label="Log out"
-              className="text-slate-400 hover:text-slate-600 md:hidden"
-            >
-              <LogOut className="h-5 w-5" />
-            </button>
+            {user ? (
+              <>
+                <span className="hidden text-sm text-slate-600 sm:inline">{user.name}</span>
+                <span className="rounded-full bg-ghana-gold/20 px-2 py-0.5 text-xs font-semibold capitalize text-ghana-black">
+                  {user.role}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  aria-label="Log out"
+                  className="text-slate-400 hover:text-slate-600 md:hidden"
+                >
+                  <LogOut className="h-5 w-5" />
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="text-sm font-medium text-slate-600 hover:text-slate-900">
+                  Sign in
+                </Link>
+                <Link
+                  to="/signup"
+                  className="flex items-center gap-1.5 rounded-md bg-ghana-green px-3 py-1.5 text-sm font-medium text-white"
+                >
+                  <UserRound className="h-4 w-4" />
+                  <span className="hidden sm:inline">Register</span>
+                </Link>
+              </>
+            )}
           </div>
         </header>
 

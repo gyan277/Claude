@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ThumbsUp, ThumbsDown, Languages, CheckCircle2, Landmark } from 'lucide-react';
 import Layout from '../components/Layout';
+import ContributeGate from '../components/ContributeGate';
 import { POLICIES, STATUS_STEPS } from '../data/policies';
 import { translatePolicyText, SUPPORTED_LANGUAGES, type LocalLanguage } from '../services/translation';
 import { getOfficialResponse, setOfficialResponse, type OfficialResponse } from '../services/officialResponses';
@@ -21,7 +22,7 @@ export default function PolicyDetail() {
   const [response, setResponse] = useState<OfficialResponse | null>(null);
   const [draft, setDraft] = useState('');
 
-  const canRespond = user?.role === 'assembly' || user?.role === 'minister';
+  const canRespond = (user?.role === 'assembly' || user?.role === 'minister') && user?.verified;
 
   useEffect(() => {
     if (id) setResponse(getOfficialResponse(id));
@@ -146,31 +147,35 @@ export default function PolicyDetail() {
             <div className="h-full bg-ghana-green" style={{ width: `${policy.supportPct}%` }} />
           </div>
 
-          <div className="mt-5 flex gap-3">
-            <button
-              onClick={() => setVote('support')}
-              className={`flex flex-1 items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition-colors ${
-                vote === 'support'
-                  ? 'border-ghana-green bg-ghana-green/10 text-ghana-green'
-                  : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-              }`}
-            >
-              <ThumbsUp className="h-4 w-4" />
-              Support
-            </button>
-            <button
-              onClick={() => setVote('oppose')}
-              className={`flex flex-1 items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition-colors ${
-                vote === 'oppose'
-                  ? 'border-ghana-red bg-ghana-red/10 text-ghana-red'
-                  : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-              }`}
-            >
-              <ThumbsDown className="h-4 w-4" />
-              Oppose
-            </button>
+          <div className="mt-5">
+            <ContributeGate action="vote on this policy">
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setVote('support')}
+                  className={`flex flex-1 items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition-colors ${
+                    vote === 'support'
+                      ? 'border-ghana-green bg-ghana-green/10 text-ghana-green'
+                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                  }`}
+                >
+                  <ThumbsUp className="h-4 w-4" />
+                  Support
+                </button>
+                <button
+                  onClick={() => setVote('oppose')}
+                  className={`flex flex-1 items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition-colors ${
+                    vote === 'oppose'
+                      ? 'border-ghana-red bg-ghana-red/10 text-ghana-red'
+                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                  }`}
+                >
+                  <ThumbsDown className="h-4 w-4" />
+                  Oppose
+                </button>
+              </div>
+              {vote && <p className="mt-3 text-xs text-slate-400">Your vote is recorded anonymously.</p>}
+            </ContributeGate>
           </div>
-          {vote && <p className="mt-3 text-xs text-slate-400">Your vote is recorded anonymously.</p>}
         </div>
 
         <div className="rounded-lg border border-ghana-green/30 bg-white p-5 shadow-sm">

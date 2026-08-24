@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 import { MessageSquare, Lock, Globe, Search, Plus } from 'lucide-react';
 import Layout from '../components/Layout';
+import ContributeGate from '../components/ContributeGate';
 import { useAuth } from '../context/AuthContext';
 
 interface ForumPost {
@@ -47,6 +49,8 @@ export default function Forums() {
   useEffect(() => {
     persistExtraPosts(posts);
   }, [posts]);
+
+  const districtLocked = tab === 'district' && !user;
 
   const visiblePosts = useMemo(() => {
     const scoped =
@@ -119,40 +123,64 @@ export default function Forums() {
           </div>
         </div>
 
-        <form onSubmit={handleNewPost} className="flex gap-2 rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
-          <input
-            value={draftTitle}
-            onChange={(event) => setDraftTitle(event.target.value)}
-            placeholder={tab === 'district' ? `Start a discussion in ${user?.district ?? 'your district'}…` : 'Start a national discussion…'}
-            className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-ghana-green focus:outline-none"
-          />
-          <button
-            type="submit"
-            disabled={!draftTitle.trim()}
-            className="flex items-center gap-1.5 rounded-md bg-ghana-green px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
-          >
-            <Plus className="h-4 w-4" />
-            Post
-          </button>
-        </form>
-
-        <div className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white shadow-sm">
-          {visiblePosts.length === 0 && (
-            <p className="p-5 text-sm text-slate-400">No discussions here yet. Start one above.</p>
-          )}
-          {visiblePosts.map((post) => (
-            <div key={post.id} className="flex items-center justify-between p-4">
-              <div>
-                <p className="text-sm font-medium text-slate-900">{post.title}</p>
-                <p className="text-xs text-slate-500">by {post.author}</p>
-              </div>
-              <div className="flex items-center gap-1 text-xs text-slate-400">
-                <MessageSquare className="h-3.5 w-3.5" />
-                {post.replies}
-              </div>
+        {districtLocked ? (
+          <div className="rounded-lg border border-slate-200 bg-white p-6 text-center">
+            <Lock className="mx-auto h-5 w-5 text-slate-400" />
+            <p className="mt-2 text-sm text-slate-600">
+              District discussions are locked to residents. Sign in to see and join your district's board.
+            </p>
+            <div className="mt-3 flex justify-center gap-2">
+              <Link to="/signup" className="rounded-md bg-ghana-green px-4 py-2 text-sm font-medium text-white">
+                Create account
+              </Link>
+              <Link
+                to="/login"
+                className="rounded-md border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+              >
+                Sign in
+              </Link>
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <>
+            <ContributeGate action="start a discussion">
+              <form onSubmit={handleNewPost} className="flex gap-2 rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+                <input
+                  value={draftTitle}
+                  onChange={(event) => setDraftTitle(event.target.value)}
+                  placeholder={tab === 'district' ? `Start a discussion in ${user?.district ?? 'your district'}…` : 'Start a national discussion…'}
+                  className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-ghana-green focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  disabled={!draftTitle.trim()}
+                  className="flex items-center gap-1.5 rounded-md bg-ghana-green px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
+                >
+                  <Plus className="h-4 w-4" />
+                  Post
+                </button>
+              </form>
+            </ContributeGate>
+
+            <div className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white shadow-sm">
+              {visiblePosts.length === 0 && (
+                <p className="p-5 text-sm text-slate-400">No discussions here yet. Start one above.</p>
+              )}
+              {visiblePosts.map((post) => (
+                <div key={post.id} className="flex items-center justify-between p-4">
+                  <div>
+                    <p className="text-sm font-medium text-slate-900">{post.title}</p>
+                    <p className="text-xs text-slate-500">by {post.author}</p>
+                  </div>
+                  <div className="flex items-center gap-1 text-xs text-slate-400">
+                    <MessageSquare className="h-3.5 w-3.5" />
+                    {post.replies}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </Layout>
   );

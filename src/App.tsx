@@ -8,20 +8,6 @@ import PolicyDetail from './pages/PolicyDetail';
 import Forums from './pages/Forums';
 import Insights from './pages/Insights';
 
-function ProtectedRoute({ children }: { children: JSX.Element }) {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return <div className="flex min-h-screen items-center justify-center text-slate-400">Loading…</div>;
-  }
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return children;
-}
-
 function GovRoute({ children }: { children: JSX.Element }) {
   const { user, loading } = useAuth();
 
@@ -45,38 +31,10 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/policies"
-        element={
-          <ProtectedRoute>
-            <Policies />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/policies/:id"
-        element={
-          <ProtectedRoute>
-            <PolicyDetail />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/forums"
-        element={
-          <ProtectedRoute>
-            <Forums />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/" element={<Home />} />
+      <Route path="/policies" element={<Policies />} />
+      <Route path="/policies/:id" element={<PolicyDetail />} />
+      <Route path="/forums" element={<Forums />} />
       <Route
         path="/insights"
         element={
