@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Policies from './pages/Policies';
 import PolicyDetail from './pages/PolicyDetail';
 import Forums from './pages/Forums';
+import Insights from './pages/Insights';
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   const { user, loading } = useAuth();
@@ -16,6 +17,24 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
 
   if (!user) {
     return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
+
+function GovRoute({ children }: { children: JSX.Element }) {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div className="flex min-h-screen items-center justify-center text-slate-400">Loading…</div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (user.role !== 'assembly' && user.role !== 'minister') {
+    return <Navigate to="/" replace />;
   }
 
   return children;
@@ -56,6 +75,14 @@ export default function App() {
           <ProtectedRoute>
             <Forums />
           </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/insights"
+        element={
+          <GovRoute>
+            <Insights />
+          </GovRoute>
         }
       />
       <Route path="*" element={<Navigate to="/" replace />} />

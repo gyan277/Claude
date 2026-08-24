@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Home, FileText, MessageSquare, LogOut, Landmark, Star } from 'lucide-react';
+import { Home, FileText, MessageSquare, LogOut, Landmark, Star, BarChart3 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const NAV_ITEMS = [
@@ -8,6 +8,8 @@ const NAV_ITEMS = [
   { to: '/policies', label: 'Policies', icon: FileText },
   { to: '/forums', label: 'Forums', icon: MessageSquare },
 ];
+
+const GOV_NAV_ITEM = { to: '/insights', label: 'Insights', icon: BarChart3 };
 
 export default function Layout({ children }: { children: ReactNode }) {
   const { user, logout } = useAuth();
@@ -34,7 +36,8 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
 
         <nav className="flex flex-1 flex-col gap-1">
-          {NAV_ITEMS.map(({ to, label, icon: Icon }) => (
+          {[...NAV_ITEMS, ...(user?.role === 'assembly' || user?.role === 'minister' ? [GOV_NAV_ITEM] : [])].map(
+            ({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
