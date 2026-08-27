@@ -204,7 +204,7 @@ export default function Forums() {
     }
 
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('forum_posts')
         .insert([
           {
@@ -299,7 +299,7 @@ export default function Forums() {
     if (!content || !user || !user.verified) return;
 
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('forum_comments')
         .insert([
           {

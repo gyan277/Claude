@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth, type UserRole } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { supabase } from '../services/supabaseClient';
 import VerificationModal from '../components/VerificationModal';
 import type { GhanaCardData } from '../services/ghanaCardVerification';
