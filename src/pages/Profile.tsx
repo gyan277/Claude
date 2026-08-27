@@ -59,8 +59,8 @@ export default function Profile() {
 
   return (
     <Layout>
-      <div className="mx-auto max-w-lg space-y-6">
-        <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="mx-auto max-w-lg space-y-6 animate-fade-in">
+        <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm animate-scale-in">
           <div className="flex items-center gap-4">
             <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-ghana-green/10 text-xl font-bold text-ghana-green">
               {initials}
@@ -118,14 +118,14 @@ export default function Profile() {
           )}
         </div>
 
-        <div className="rounded-lg border border-ghana-green/30 bg-ghana-green/5 p-4 text-sm text-slate-600">
+        <div className="rounded-lg border border-ghana-green/30 bg-ghana-green/5 p-4 text-sm text-slate-600 animate-slide-up">
           Your Ghana Card details are used only to verify you're a real, unique citizen. Your votes, posts, and
           forum activity are never linked back to your identity.
         </div>
 
         <button
           onClick={handleLogout}
-          className="flex w-full items-center justify-center gap-2 rounded-md border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+          className="flex w-full items-center justify-center gap-2 rounded-md border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 animate-slide-up animate-delay-100"
         >
           <LogOut className="h-4 w-4" />
           Log out

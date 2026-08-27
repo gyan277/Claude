@@ -1,6 +1,5 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Landmark } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
@@ -16,8 +15,16 @@ export default function Login() {
     setError(null);
     setSubmitting(true);
     try {
-      await login(email, password);
-      navigate('/');
+      const loggedInUser = await login(email, password);
+      
+      // Role-based redirect
+      if (loggedInUser.role === 'assembly' || loggedInUser.role === 'minister') {
+        // Assembly Members and Ministers go to Insights
+        navigate('/insights');
+      } else {
+        // Citizens go to Home
+        navigate('/');
+      }
     } catch {
       setError('Could not sign in. Check your credentials and try again.');
     } finally {
@@ -35,7 +42,13 @@ export default function Login() {
         </div>
         <div className="p-8">
         <div className="mb-6 flex flex-col items-center gap-2">
-          <Landmark className="h-8 w-8 text-ghana-green" />
+          <div className="rounded-lg bg-ghana-green/10 p-2">
+            <img 
+              src="/src/assets/logo.png" 
+              alt="Ghana Logo" 
+              className="h-8 w-8 object-contain"
+            />
+          </div>
           <h1 className="text-xl font-bold text-slate-900">Dodow Amanmuo</h1>
           <p className="text-sm text-slate-500">Sign in to your civic dashboard</p>
         </div>

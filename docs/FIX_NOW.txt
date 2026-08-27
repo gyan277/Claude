@@ -1,0 +1,38 @@
+=====================================
+FIX YOUR ERROR IN 30 SECONDS
+=====================================
+
+YOUR ERROR:
+"new row violates row-level security policy for table 'ghana_news'"
+
+THE FIX:
+1. Open https://supabase.com/dashboard
+2. Click SQL Editor
+3. Click New query
+4. Open file: FIX_ALL_RLS_POLICIES.sql
+5. Copy ALL text from that file
+6. Paste into SQL Editor
+7. Click RUN button
+8. Wait for Success message
+9. Go back to admin panel
+10. Try creating news again
+11. IT WILL WORK! ✅
+
+TIME: 30 seconds
+DIFFICULTY: Copy & Paste
+
+WHAT FILE TO RUN:
+→ FIX_ALL_RLS_POLICIES.sql ← THIS ONE!
+
+WHAT IT DOES:
+Fixes permissions on all database tables so you can create/edit/delete data.
+
+SAFE TO RUN:
+Yes! Safe to run multiple times. Won't delete any data.
+
+NEED MORE HELP:
+→ Open: README_START_HERE.md
+→ Or: VISUAL_FIX_GUIDE.md
+→ Or: QUICK_START.md
+
+GO FIX IT NOW! →→→ 🚀

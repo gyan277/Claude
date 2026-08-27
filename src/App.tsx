@@ -8,6 +8,8 @@ import PolicyDetail from './pages/PolicyDetail';
 import Forums from './pages/Forums';
 import Insights from './pages/Insights';
 import Profile from './pages/Profile';
+import Admin from './pages/Admin';
+import SuperAdminLogin from './pages/SuperAdminLogin';
 
 function GovRoute({ children }: { children: JSX.Element }) {
   const { user, loading } = useAuth();
@@ -32,11 +34,13 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/super-admin-login" element={<SuperAdminLogin />} />
       <Route path="/" element={<Home />} />
       <Route path="/policies" element={<Policies />} />
       <Route path="/policies/:id" element={<PolicyDetail />} />
       <Route path="/forums" element={<Forums />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/admin" element={<Admin />} />
       <Route
         path="/insights"
         element={
